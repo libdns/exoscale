@@ -134,18 +134,17 @@ func (p *Provider) createRecords(ctx context.Context, zone string, records []lib
 func (p *Provider) findExistingZone(zoneName string) (*egoscale.DNSDomain, error) {
 	ctx := context.Background()
 
-	zones, err := p.client.ListDNSDomains(ctx)
+	dnsDomainResp, err := p.client.ListDNSDomains(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error while retrieving DNS zones: %w", err)
 	}
 
-	for _, zone := range zones.DNSDomains {
-		if zone.UnicodeName == zoneName {
-			return &zone, nil
-		}
+	domain, err := dnsDomainResp.FindDNSDomain(zoneName)
+	if err != nil {
+		return nil, fmt.Errorf("error while retrieving DNS zones: %w", err)
 	}
 
-	return nil, nil
+	return &domain, nil
 }
 
 // findExistingRecordID Query Exoscale to find an existing record for this name.
