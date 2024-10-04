@@ -5,7 +5,7 @@ go 1.22.0
 toolchain go1.22.5
 
 require (
-	github.com/exoscale/egoscale/v3 v3.1.5
+	github.com/exoscale/egoscale/v3 v3.1.7
 	github.com/libdns/libdns v0.2.2
 )
 
